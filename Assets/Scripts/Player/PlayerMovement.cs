@@ -78,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(rayCastStart.position, Vector2.right, rayDistance);
         Debug.DrawRay(rayCastStart.position, Vector2.right * rayDistance, Color.red, 2f);
 
-        if (hit.collider != null)
+        if (hit.collider != null && hit.collider.CompareTag("Interactable"))
         {
             Debug.Log("Raycast hit: " + hit.collider.name);
             playerRigidBody.AddForce(new Vector2(interactImpulse, 0), ForceMode2D.Impulse);
