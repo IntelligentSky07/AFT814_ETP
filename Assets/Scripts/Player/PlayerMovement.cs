@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public float interactImpulse = 5f;
 
     public Transform rayCastStart;
+    public GameObject VFX;
 
     private bool isJumping = false;
 
@@ -81,6 +82,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("Raycast hit: " + hit.collider.name);
             playerRigidBody.AddForce(new Vector2(interactImpulse, 0), ForceMode2D.Impulse);
+            Instantiate(VFX, transform.position, Quaternion.identity);
         }
         else
         {
