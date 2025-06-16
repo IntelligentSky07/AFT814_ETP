@@ -7,6 +7,10 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
+    public float rayDistance = 1f;
+    public float interactImpulse = 5f;
+
+    public Transform rayCastStart;
 
     private bool isJumping = false;
 
@@ -41,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (context.started)
         {
-            Debug.Log("Interact action triggered");
+            RayCast();
         }
     }
 
@@ -65,6 +69,22 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isJumping = false;
+        }
+    }
+
+    private void RayCast()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(rayCastStart.position, Vector2.right, rayDistance);
+        Debug.DrawRay(rayCastStart.position, Vector2.right * rayDistance, Color.red, 2f);
+
+        if (hit.collider != null)
+        {
+            Debug.Log("Raycast hit: " + hit.collider.name);
+            playerRigidBody.AddForce(new Vector2(interactImpulse, 0), ForceMode2D.Impulse);
+        }
+        else
+        {
+            Debug.Log("Raycast did not hit anything.");
         }
     }
 }
