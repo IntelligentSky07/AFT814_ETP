@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject VFX;
 
     private bool isJumping = false;
+    private bool isFacingRight = true;
 
     private Rigidbody2D playerRigidBody;
     private Vector2 movementInput;
@@ -58,10 +59,12 @@ public class PlayerMovement : MonoBehaviour
         if(movementInput.x > 0)
         {
             spriteRenderer.flipX = false;
+            isFacingRight = true;
         }
         else if(movementInput.x < 0)
         {
             spriteRenderer.flipX = true;
+            isFacingRight = false;
         }
     }
 
@@ -88,5 +91,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("Raycast did not hit anything.");
         }
+
     }
 }
