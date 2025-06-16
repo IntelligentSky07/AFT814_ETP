@@ -33,6 +33,15 @@ public class PlayerMovement : MonoBehaviour
         {
             isJumping = true;
             playerRigidBody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            animator.SetTrigger("Jump");
+        }
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Debug.Log("Interact action triggered");
         }
     }
 
