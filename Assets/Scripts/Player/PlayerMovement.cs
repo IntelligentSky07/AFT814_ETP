@@ -7,8 +7,9 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
 
-    private Rigidbody2D playerRigidBody;
+    private bool isJumping = false;
 
+    private Rigidbody2D playerRigidBody;
     private Vector2 movementInput;
 
     private void Awake()
@@ -21,8 +22,25 @@ public class PlayerMovement : MonoBehaviour
         movementInput = context.ReadValue<Vector2>();
     }
 
-    private void Update()
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.started && !isJumping)
+        {
+            isJumping = true;
+            playerRigidBody.AddForce(new Vector2(0, 5f), ForceMode2D.Impulse);
+        }
+    }
+
+    private void FixedUpdate()
     {
         playerRigidBody.velocity = new Vector2(movementInput.x * moveSpeed, playerRigidBody.velocity.y);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isJumping = false;
+        }
     }
 }
