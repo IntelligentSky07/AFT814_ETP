@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
     public GameObject VFX;
 
     private bool isJumping = false;
-    private bool isFacingRight = true;
 
     private Rigidbody2D playerRigidBody;
     private Vector2 movementInput;
@@ -59,12 +58,10 @@ public class PlayerMovement : MonoBehaviour
         if(movementInput.x > 0)
         {
             spriteRenderer.flipX = false;
-            isFacingRight = true;
         }
         else if(movementInput.x < 0)
         {
             spriteRenderer.flipX = true;
-            isFacingRight = false;
         }
     }
 
@@ -84,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
         if (hit.collider != null && hit.collider.CompareTag("Interactable"))
         {
             Debug.Log("Raycast hit: " + hit.collider.name);
-            playerRigidBody.AddForce(new Vector2(interactImpulse, 0), ForceMode2D.Impulse);
+            playerRigidBody.AddForce(new Vector2(3, 2f), ForceMode2D.Impulse);
             Instantiate(VFX, transform.position, Quaternion.identity);
         }
         else
