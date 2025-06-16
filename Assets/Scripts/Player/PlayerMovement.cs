@@ -10,10 +10,12 @@ public class PlayerMovement : MonoBehaviour
     public float rayDistance = 1f;
     public float interactImpulse = 5f;
 
-    public Transform rayCastStart;
+    public Transform leftrayCastStart;
+    public Transform rightrayCastStart;
     public GameObject VFX;
 
     private bool isJumping = false;
+    private bool isFacingRight = true;
 
     private Rigidbody2D playerRigidBody;
     private Vector2 movementInput;
@@ -58,10 +60,12 @@ public class PlayerMovement : MonoBehaviour
         if(movementInput.x > 0)
         {
             spriteRenderer.flipX = false;
+            isFacingRight = true;
         }
         else if(movementInput.x < 0)
         {
             spriteRenderer.flipX = true;
+            isFacingRight = false;
         }
     }
 
@@ -75,19 +79,37 @@ public class PlayerMovement : MonoBehaviour
 
     private void RayCast()
     {
-        RaycastHit2D hit = Physics2D.Raycast(rayCastStart.position, Vector2.right, rayDistance);
-        Debug.DrawRay(rayCastStart.position, Vector2.right * rayDistance, Color.red, 2f);
-
-        if (hit.collider != null && hit.collider.CompareTag("Interactable"))
+        if (isFacingRight==true)
         {
-            Debug.Log("Raycast hit: " + hit.collider.name);
-            playerRigidBody.AddForce(new Vector2(interactImpulse, 2f), ForceMode2D.Impulse);
-            Instantiate(VFX, transform.position, Quaternion.identity);
-        }
-        else
-        {
-            Debug.Log("Raycast did not hit anything.");
-        }
+            RaycastHit2D hit = Physics2D.Raycast(leftrayCastStart.position, Vector2.right, rayDistance);
+            Debug.DrawRay(leftrayCastStart.position, Vector2.right * rayDistance, Color.red, 2f);
 
+            if (hit.collider != null && hit.collider.CompareTag("Interactable"))
+            {
+                Debug.Log("Raycast hit: " + hit.collider.name);
+                playerRigidBody.AddForce(new Vector2(interactImpulse, 2f), ForceMode2D.Impulse);
+                Instantiate(VFX, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                Debug.Log("Raycast did not hit anything.");
+            }
+        }
+        else if(isFacingRight==false)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(rightrayCastStart.position, Vector2.left, rayDistance);
+            Debug.DrawRay(rightrayCastStart.position, Vector2.left * rayDistance, Color.red, 2f);
+
+            if (hit.collider != null && hit.collider.CompareTag("Interactable"))
+            {
+                Debug.Log("Raycast hit: " + hit.collider.name);
+                playerRigidBody.AddForce(new Vector2(interactImpulse, 2f), ForceMode2D.Impulse);
+                Instantiate(VFX, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                Debug.Log("Raycast did not hit anything.");
+            }
+        }
     }
 }
