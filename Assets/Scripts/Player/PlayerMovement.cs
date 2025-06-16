@@ -12,10 +12,14 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D playerRigidBody;
     private Vector2 movementInput;
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
         playerRigidBody = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -35,6 +39,16 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         playerRigidBody.velocity = new Vector2(movementInput.x * moveSpeed, playerRigidBody.velocity.y);
+        animator.SetFloat("Speed", Mathf.Abs(movementInput.x));
+
+        if(movementInput.x > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if(movementInput.x < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
