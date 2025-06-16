@@ -81,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
         if (hit.collider != null && hit.collider.CompareTag("Interactable"))
         {
             Debug.Log("Raycast hit: " + hit.collider.name);
-            playerRigidBody.AddForce(new Vector2(3, 2f), ForceMode2D.Impulse);
+            playerRigidBody.AddForce(new Vector2(interactImpulse, 2f), ForceMode2D.Impulse);
             Instantiate(VFX, transform.position, Quaternion.identity);
         }
         else
