@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    public float jumpForce = 5f;
 
     private bool isJumping = false;
 
@@ -27,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
         if (context.started && !isJumping)
         {
             isJumping = true;
-            playerRigidBody.AddForce(new Vector2(0, 5f), ForceMode2D.Impulse);
+            playerRigidBody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         }
     }
 
